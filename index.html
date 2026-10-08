@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sudenaz Çakır | Software Engineering Student</title>
+  <meta name="description" content="Portfolio of Sudenaz Çakır, Software Engineering student at Yaşar University. Full-stack projects with Node.js, React and AI integrations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1c1917;
+      --muted: #57534e;
+      --border: #e7e5e4;
+      --accent: #4f46e5;
+      --accent-soft: #eef2ff;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f0f12;
+        --surface: #18181c;
+        --text: #f5f5f4;
+        --muted: #a8a29e;
+        --border: #2a2a30;
+        --accent: #818cf8;
+        --accent-soft: #1e1b3a;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+    /* Nav */
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .container { display: flex; justify-content: space-between; align-items: center; height: 60px; }
+    .logo { font-family: "JetBrains Mono", monospace; font-weight: 500; color: var(--text); }
+    .nav-links { display: flex; gap: 22px; font-size: 0.92rem; }
+    .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--accent); text-decoration: none; }
+
+    /* Hero */
+    .hero { padding: 90px 0 70px; }
+    .hero-inner { display: flex; gap: 40px; align-items: center; }
+    .avatar {
+      width: 150px; height: 150px; border-radius: 50%; object-fit: cover;
+      border: 3px solid var(--accent-soft); flex-shrink: 0;
+    }
+    .eyebrow { font-family: "JetBrains Mono", monospace; color: var(--accent); font-size: 0.9rem; margin-bottom: 8px; }
+    h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1.15; letter-spacing: -0.02em; }
+    .hero p.lead { color: var(--muted); font-size: 1.1rem; margin: 16px 0 26px; max-width: 600px; }
+    .buttons { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn {
+      display: inline-block; padding: 10px 20px; border-radius: 10px;
+      font-weight: 500; font-size: 0.95rem; border: 1px solid var(--border); color: var(--text);
+      background: var(--surface);
+    }
+    .btn:hover { border-color: var(--accent); text-decoration: none; }
+    .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn.primary:hover { opacity: 0.9; }
+
+    /* Sections */
+    section { padding: 60px 0; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.6rem; margin-bottom: 28px; letter-spacing: -0.01em; }
+    h2 span { font-family: "JetBrains Mono", monospace; color: var(--accent); font-size: 1rem; margin-right: 10px; }
+    h3 { font-size: 1.1rem; }
+    .muted { color: var(--muted); }
+
+    /* Timeline items */
+    .item { margin-bottom: 26px; }
+    .item-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .date { font-family: "JetBrains Mono", monospace; font-size: 0.85rem; color: var(--muted); }
+    .item ul { margin: 10px 0 0 20px; color: var(--muted); }
+    .item li { margin-bottom: 4px; }
+
+    /* Projects */
+    .projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; display: flex; flex-direction: column;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .card:hover { transform: translateY(-3px); border-color: var(--accent); }
+    .card img, .card video, .card iframe { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border: 0; display: block; background: var(--accent-soft); }
+    .card-body { padding: 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .card-body p { color: var(--muted); font-size: 0.93rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 0.75rem; padding: 3px 9px; border-radius: 999px;
+      background: var(--accent-soft); color: var(--accent); font-weight: 500;
+    }
+    .links { display: flex; gap: 16px; font-size: 0.9rem; font-weight: 500; margin-top: auto; }
+
+    .card img.zoomable { object-position: top left; cursor: zoom-in; }
+    .gallery { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    .card .gallery img {
+      aspect-ratio: 4 / 3; object-fit: cover; object-position: top center;
+      border-radius: 6px; border: 1px solid var(--border); cursor: zoom-in;
+    }
+    .card .gallery img:hover { border-color: var(--accent); }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 50; display: none;
+      align-items: center; justify-content: center; padding: 20px;
+      background: rgba(0, 0, 0, 0.92); cursor: zoom-out;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 100%; max-height: 90vh; border-radius: 10px; }
+
+    /* Skills */
+    .skills { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .skill-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
+    .skill-box h3 { font-size: 0.95rem; margin-bottom: 10px; }
+
+    /* Contact */
+    .contact p { color: var(--muted); margin-bottom: 20px; max-width: 560px; }
+    footer { padding: 30px 0; text-align: center; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--border); }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hero { padding: 60px 0 50px; }
+      .hero-inner { flex-direction: column; align-items: flex-start; gap: 24px; }
+      .avatar { width: 110px; height: 110px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">sudenaz.dev</a>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#education">Education</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="about">
+    <div class="container hero-inner">
+      <!-- Add your photo as images/profile.jpg. If the file is missing, this image hides itself. -->
+      <img class="avatar" src="images/profile.jpg" alt="Sudenaz Çakır" onerror="this.remove()">
+      <div>
+        <p class="eyebrow">Hi, I'm</p>
+        <h1>Sudenaz Çakır</h1>
+        <p class="lead">
+          Third-year Software Engineering student at Yaşar University, building full-stack web applications
+          with Node.js, React and AI integrations. Seeking a software engineering internship in Turkey.
+        </p>
+        <div class="buttons">
+          <a class="btn primary" href="cv/Sudenaz_Cakir_CV.pdf" target="_blank">Download CV</a>
+          <a class="btn" href="https://github.com/sudenazcakir" target="_blank">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/sudenaz-çakır" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="container">
+      <h2><span>01</span>Education</h2>
+      <div class="item">
+        <div class="item-head">
+          <h3>Yaşar University</h3>
+          <span class="date">2022 – Jul 2027 (expected)</span>
+        </div>
+        <p class="muted">B.Sc. in Software Engineering · Izmir, Turkey</p>
+      </div>
+      <div class="item">
+        <div class="item-head">
+          <h3>Samsun Science and Art Center (BİLSEM)</h3>
+          <span class="date">2010 – 2021</span>
+        </div>
+        <p class="muted">Program for gifted and talented students · Science &amp; Technology track</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="container">
+      <h2><span>02</span>Experience</h2>
+      <div class="item">
+        <div class="item-head">
+          <h3>Software Engineering Intern</h3>
+          <span class="date">Jul 2026 – Aug 2026</span>
+        </div>
+        <p class="muted">General Directorate of Highways (KGM), 7th Regional Directorate, IT Chief Engineering · Samsun</p>
+        <ul>
+          <li>Developed a corporate personnel management system with Node.js, Express.js, SQLite and vanilla JavaScript.</li>
+          <li>Implemented role-based access control, OTP login verification, audit logging, national ID masking and SQL injection protection.</li>
+          <li>Built Excel/CSV import and Excel/CSV/PDF report exports with data quality checks and reconciliation.</li>
+          <li>Set up an automated testing infrastructure for the system.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <h2><span>03</span>Projects</h2>
+      <div class="projects">
+
+        <div class="card">
+          <!-- Screenshot: images/ai-career-api.png -->
+          <img src="images/ai-career-api.png" alt="AI Career API screenshot" onerror="this.remove()">
+          <div class="card-body">
+            <h3>AI Career API</h3>
+            <p>AI-assisted career matching platform with CV versioning, ATS optimization, job matching, skill gap analysis and an application tracker. Team of 2, full-stack.</p>
+            <div class="tags">
+              <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Express</span>
+              <span class="tag">MongoDB</span><span class="tag">OpenAI API</span><span class="tag">Playwright</span>
+            </div>
+            <div class="links">
+              <a href="https://ai-career-api-eight.vercel.app" target="_blank">Live demo ↗</a>
+              <a href="https://github.com/sudenazcakir/ai-career-api" target="_blank">Code ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <!-- Demo video: replace VIDEO_ID with your YouTube video ID and remove the comment markers.
+          <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Senior Project Platform demo" allowfullscreen></iframe>
+          -->
+          <img src="images/senior-app.png" alt="Senior Project Management Platform screenshot" onerror="this.remove()">
+          <div class="card-body">
+            <h3>Senior Project Management Platform</h3>
+            <p>Platform for managing university senior projects: groups, advisor matching, deliverables and sprint grading. GitHub/Jira integrations and Claude-powered PR review checks. Team project, full-stack.</p>
+            <div class="tags">
+              <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">PostgreSQL</span>
+              <span class="tag">Sequelize</span><span class="tag">Claude API</span><span class="tag">GitHub OAuth</span>
+            </div>
+            <div class="links">
+              <a href="https://github.com/SE3318-Spring-2025-2026/senior-app-1" target="_blank">Code ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <img class="zoomable" src="images/kgm-dashboard.jpg" alt="KGM Personnel Management System dashboard" loading="lazy">
+          <div class="card-body">
+            <h3>KGM Personnel Management System</h3>
+            <p>Internship project: corporate personnel system with unit hierarchy, assignment history, role-based access, OTP login, audit logs and Excel/PDF reporting.</p>
+            <div class="tags">
+              <span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">SQLite</span><span class="tag">JavaScript</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <video src="videos/rick-and-morty-demo.mp4" poster="images/rick-and-morty-poster.jpg" controls muted playsinline preload="metadata"></video>
+          <div class="card-body">
+            <h3>Rick and Morty Wiki</h3>
+            <p>Responsive wiki built on the public Rick and Morty API: character filtering and sorting, episode and location search with pagination, locally stored favorites and a light/dark theme. Deployed on Vercel.</p>
+            <div class="gallery">
+              <img src="images/rick-and-morty-home.jpg" alt="Home page" loading="lazy">
+              <img src="images/rick-and-morty-characters.jpg" alt="Character list with filters" loading="lazy">
+              <img src="images/rick-and-morty-episodes.jpg" alt="Episode list" loading="lazy">
+              <img src="images/rick-and-morty-locations.jpg" alt="Location list" loading="lazy">
+              <img src="images/rick-and-morty-favorites.jpg" alt="Favorites page" loading="lazy">
+            </div>
+            <div class="tags">
+              <span class="tag">React</span><span class="tag">Tailwind CSS</span><span class="tag">Vite</span>
+            </div>
+            <div class="links">
+              <a href="https://midterm-sudenazcakir.vercel.app" target="_blank">Live demo ↗</a>
+              <a href="https://github.com/sudenazcakir/rick-and-morty-wiki" target="_blank">Code ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="images/teamaker.png" alt="TeaMaker screenshot" onerror="this.remove()">
+          <div class="card-body">
+            <h3>TeaMaker Application</h3>
+            <p>Desktop application built with MVC architecture and a GUI, logging application actions to MySQL.</p>
+            <div class="tags"><span class="tag">Java</span><span class="tag">MVC</span><span class="tag">MySQL</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="images/book-search.png" alt="Book Search screenshot" onerror="this.remove()">
+          <div class="card-body">
+            <h3>Online Book Search &amp; Favorites</h3>
+            <p>Search books and authors, manage favorites, save reviews, page counts and personal notes.</p>
+            <div class="tags"><span class="tag">Java</span><span class="tag">MySQL</span><span class="tag">NetBeans</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h3>İzmirimkart Quality Testing</h3>
+            <p>Black-box testing of a live web application, with user scenarios automated in Selenium and a report of defects and improvements.</p>
+            <div class="tags"><span class="tag">Selenium</span><span class="tag">Black-box testing</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <h2><span>04</span>Skills</h2>
+      <div class="skills">
+        <div class="skill-box"><h3>Languages</h3><div class="tags"><span class="tag">Java</span><span class="tag">JavaScript</span><span class="tag">SQL</span><span class="tag">C</span><span class="tag">C++</span><span class="tag">HTML</span><span class="tag">CSS</span></div></div>
+        <div class="skill-box"><h3>Frameworks &amp; Libraries</h3><div class="tags"><span class="tag">Node.js</span><span class="tag">Express.js</span><span class="tag">React</span><span class="tag">Vite</span><span class="tag">Tailwind CSS</span><span class="tag">Sequelize</span></div></div>
+        <div class="skill-box"><h3>Databases</h3><div class="tags"><span class="tag">MySQL</span><span class="tag">PostgreSQL</span><span class="tag">SQLite</span><span class="tag">MongoDB</span></div></div>
+        <div class="skill-box"><h3>Testing</h3><div class="tags"><span class="tag">Vitest</span><span class="tag">Playwright</span><span class="tag">Selenium</span><span class="tag">Node.js test runner</span></div></div>
+        <div class="skill-box"><h3>Tools &amp; Practices</h3><div class="tags"><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">Postman</span><span class="tag">Jira</span><span class="tag">REST APIs</span><span class="tag">Swagger</span><span class="tag">Vercel</span><span class="tag">Agile/Scrum</span></div></div>
+        <div class="skill-box"><h3>AI &amp; Languages</h3><div class="tags"><span class="tag">OpenAI API</span><span class="tag">Claude API</span><span class="tag">Turkish (native)</span><span class="tag">English (fluent)</span><span class="tag">German (pre-intermediate)</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2><span>05</span>Contact</h2>
+      <p>I'm looking for software engineering internship opportunities in Turkey. Feel free to reach out.</p>
+      <div class="buttons">
+        <a class="btn primary" href="mailto:serensude55@icloud.com">Email me</a>
+        <a class="btn" href="https://www.linkedin.com/in/sudenaz-çakır" target="_blank">LinkedIn</a>
+        <a class="btn" href="https://github.com/sudenazcakir" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2026 Sudenaz Çakır · Built with HTML &amp; CSS, hosted on GitHub Pages</footer>
+
+  <div class="lightbox" id="lightbox"><img alt=""></div>
+  <script>
+    // Click a screenshot to view it full size; click anywhere or press Esc to close.
+    const box = document.getElementById('lightbox');
+    const big = box.querySelector('img');
+    document.querySelectorAll('.gallery img, img.zoomable').forEach(img => {
+      img.addEventListener('click', () => {
+        big.src = img.src;
+        big.alt = img.alt;
+        box.classList.add('open');
+      });
+    });
+    box.addEventListener('click', () => box.classList.remove('open'));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') box.classList.remove('open'); });
+  </script>
+
+</body>
+</html>
